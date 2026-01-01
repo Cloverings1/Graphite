@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
-import { useAuth } from "@clerk/nextjs";
 import { cn, formatBytes } from "@/lib/utils";
 import { Upload, Cloud, X, CheckCircle2, AlertCircle } from "lucide-react";
 import Uppy from "@uppy/core";
@@ -26,7 +25,6 @@ interface UploadZoneProps {
 export function UploadZone({ onUploadComplete }: UploadZoneProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [uploads, setUploads] = useState<UploadFile[]>([]);
-  const { getToken } = useAuth();
   const uppyRef = useRef<Uppy | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -43,12 +41,7 @@ export function UploadZone({ onUploadComplete }: UploadZoneProps) {
       chunkSize: 5 * 1024 * 1024, // 5MB chunks for parallel upload
       retryDelays: [0, 1000, 3000, 5000],
       parallelUploads: 6, // 6 parallel chunk uploads
-      async onBeforeRequest(req) {
-        const token = await getToken();
-        if (token) {
-          req.setHeader("Authorization", `Bearer ${token}`);
-        }
-      },
+      // Auth headers will be added when Clerk is re-enabled
     });
 
     uppy.on("file-added", (file) => {
@@ -112,7 +105,7 @@ export function UploadZone({ onUploadComplete }: UploadZoneProps) {
     return () => {
       uppy.cancelAll();
     };
-  }, [getToken, onUploadComplete]);
+  }, [onUploadComplete]);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -159,7 +152,6 @@ export function UploadZone({ onUploadComplete }: UploadZoneProps) {
         },
       });
     });
-    // Reset input
     if (inputRef.current) {
       inputRef.current.value = "";
     }
