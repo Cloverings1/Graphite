@@ -1,6 +1,6 @@
 "use client";
 
-import { SignUpButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import { SignUpButton, SignedIn, SignedOut } from "@/components/auth/auth-wrapper";
 import Link from "next/link";
 
 export function FinalCTA() {

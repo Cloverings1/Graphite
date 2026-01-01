@@ -6,7 +6,7 @@ import { FolderList } from "./folder-list";
 import { StorageIndicator } from "./storage-indicator";
 import { Button } from "@/components/ui/button";
 import { Settings, HelpCircle, LogOut } from "lucide-react";
-import { SignOutButton, UserButton } from "@clerk/nextjs";
+import { SignOutButton, UserButton } from "@/components/auth/auth-wrapper";
 import Link from "next/link";
 
 export function Sidebar() {

@@ -2,7 +2,7 @@
 
 import { pricingTiers } from "@/data/pricing-tiers";
 import { Check } from "lucide-react";
-import { SignUpButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import { SignUpButton, SignedIn, SignedOut } from "@/components/auth/auth-wrapper";
 import Link from "next/link";
 
 export function Pricing() {

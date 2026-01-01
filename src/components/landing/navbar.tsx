@@ -8,7 +8,7 @@ import {
   SignedIn,
   SignedOut,
   UserButton,
-} from "@clerk/nextjs";
+} from "@/components/auth/auth-wrapper";
 import Link from "next/link";
 
 export function Navbar() {
