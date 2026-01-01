@@ -1,15 +1,10 @@
-import { clerkMiddleware } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// If Clerk keys are not set, use a pass-through middleware
-const hasClerkKeys = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY && process.env.CLERK_SECRET_KEY;
-
-export default hasClerkKeys
-  ? clerkMiddleware()
-  : function middleware(request: NextRequest) {
-      return NextResponse.next();
-    };
+// CLERK DISABLED - pass-through middleware until domain is whitelisted
+export default function middleware(request: NextRequest) {
+  return NextResponse.next();
+}
 
 export const config = {
   matcher: [
