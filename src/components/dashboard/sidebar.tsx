@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Logo } from "@/components/icons/logo";
 import { SidebarNav } from "./sidebar-nav";
 import { FolderList } from "./folder-list";
@@ -8,11 +9,39 @@ import { Button } from "@/components/ui/button";
 import { Settings, HelpCircle, LogOut } from "lucide-react";
 import { SignOutButton, UserButton } from "@/components/auth/auth-wrapper";
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/client";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.graphite.atxcopy.com";
 
 export function Sidebar() {
-  // Empty storage for now - will be connected to real data later
-  const usedStorage = 0;
-  const totalStorage = 100 * 1024 * 1024 * 1024; // 100GB (Creator plan default)
+  const [usedStorage, setUsedStorage] = useState(0);
+  const [totalStorage, setTotalStorage] = useState(100 * 1024 * 1024 * 1024); // 100GB default
+  const supabase = createClient();
+
+  useEffect(() => {
+    const fetchStorage = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.access_token) return;
+
+      try {
+        const res = await fetch(`${API_URL}/api/storage`, {
+          headers: { Authorization: `Bearer ${session.access_token}` },
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setUsedStorage(data.used || 0);
+          setTotalStorage(data.limit || 100 * 1024 * 1024 * 1024);
+        }
+      } catch (err) {
+        console.error("Failed to fetch storage:", err);
+      }
+    };
+
+    fetchStorage();
+  }, [supabase]);
 
   return (
     <aside className="flex h-screen w-60 flex-col border-r border-border bg-background">
