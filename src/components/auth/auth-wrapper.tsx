@@ -81,8 +81,8 @@ export function UserButton({ afterSignOutUrl }: { afterSignOutUrl?: string }) {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    router.push(afterSignOutUrl || "/");
-    router.refresh();
+    // Use window.location for a full page redirect to clear all state
+    window.location.href = afterSignOutUrl || "/";
   };
 
   if (!user) return null;
@@ -129,14 +129,17 @@ export function SignOutButton({
   children: ReactNode;
   redirectUrl?: string;
 }) {
-  const router = useRouter();
   const supabase = createClient();
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    router.push(redirectUrl || "/");
-    router.refresh();
+    // Use window.location for a full page redirect to clear all state
+    window.location.href = redirectUrl || "/";
   };
 
-  return <div onClick={handleSignOut}>{children}</div>;
+  return (
+    <div onClick={handleSignOut} style={{ cursor: "pointer" }}>
+      {children}
+    </div>
+  );
 }
