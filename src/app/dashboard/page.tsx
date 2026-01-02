@@ -6,7 +6,7 @@ import { UploadZone } from "@/components/dashboard/upload-zone";
 import { FileBrowser } from "@/components/dashboard/file-browser";
 import type { FileItem } from "@/types";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://172.237.157.209";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.graphite.atxcopy.com";
 
 export default function DashboardPage() {
   const [files, setFiles] = useState<FileItem[]>([]);

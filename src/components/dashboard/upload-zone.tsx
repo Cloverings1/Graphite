@@ -7,7 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 import Uppy from "@uppy/core";
 import Tus from "@uppy/tus";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://172.237.157.209";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.graphite.atxcopy.com";
 const supabase = createClient();
 
 interface UploadFile {
