@@ -41,13 +41,22 @@ export function UploadZone({ onUploadComplete }: UploadZoneProps) {
     uppy.use(Tus, {
       endpoint: `${API_URL}/upload`,
       chunkSize: 10 * 1024 * 1024, // 10MB chunks - larger = fewer requests
-      retryDelays: [0, 500, 1000, 3000],
+      retryDelays: [0, 1000], // Only 1 retry to prevent spam
       parallelUploads: 10, // 10 parallel chunk uploads for max speed
       removeFingerprintOnSuccess: true, // Clean up after upload
       async onBeforeRequest(req) {
+        // Validate session first with getUser(), then get fresh token
+        const { data: { user }, error: userError } = await supabase.auth.getUser();
+        if (userError || !user) {
+          console.error("Auth error:", userError?.message || "No user");
+          return;
+        }
+
         const { data: { session } } = await supabase.auth.getSession();
         if (session?.access_token) {
           req.setHeader("Authorization", `Bearer ${session.access_token}`);
+        } else {
+          console.error("No access token in session");
         }
       },
     });

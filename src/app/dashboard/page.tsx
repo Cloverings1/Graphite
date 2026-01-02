@@ -15,9 +15,20 @@ export default function DashboardPage() {
 
   const fetchFiles = useCallback(async () => {
     try {
+      // Use getUser() first to validate/refresh the session
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+
+      if (userError || !user) {
+        console.error("Auth error:", userError?.message);
+        setLoading(false);
+        return;
+      }
+
+      // Now get the session with fresh access token
       const { data: { session } } = await supabase.auth.getSession();
 
       if (!session?.access_token) {
+        console.error("No access token in session");
         setLoading(false);
         return;
       }
