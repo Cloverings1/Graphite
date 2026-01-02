@@ -25,7 +25,7 @@ export function Pricing() {
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3 pt-4">
           {pricingTiers.map((tier, index) => (
             <div
               key={tier.id}
