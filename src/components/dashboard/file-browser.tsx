@@ -11,9 +11,10 @@ interface FileBrowserProps {
   files: FileItem[];
   title?: string;
   loading?: boolean;
+  onUpdate?: () => void;
 }
 
-export function FileBrowser({ files, title = "All Files", loading = false }: FileBrowserProps) {
+export function FileBrowser({ files, title = "All Files", loading = false, onUpdate }: FileBrowserProps) {
   const [view, setView] = useState<"list" | "grid">("list");
 
   return (
@@ -41,7 +42,7 @@ export function FileBrowser({ files, title = "All Files", loading = false }: Fil
         ) : view === "grid" ? (
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
             {files.map((file) => (
-              <FileItemRow key={file.id} file={file} view="grid" />
+              <FileItemRow key={file.id} file={file} view="grid" onUpdate={onUpdate} />
             ))}
           </div>
         ) : (
@@ -56,7 +57,7 @@ export function FileBrowser({ files, title = "All Files", loading = false }: Fil
               <div className="w-8" /> {/* Actions spacer */}
             </div>
             {files.map((file) => (
-              <FileItemRow key={file.id} file={file} view="list" />
+              <FileItemRow key={file.id} file={file} view="list" onUpdate={onUpdate} />
             ))}
           </div>
         )}

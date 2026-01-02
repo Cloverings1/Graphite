@@ -76,6 +76,7 @@ export default function DashboardPage() {
         files={files}
         title="All Files"
         loading={loading}
+        onUpdate={fetchFiles}
       />
     </div>
   );
