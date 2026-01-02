@@ -8,7 +8,6 @@ import Uppy from "@uppy/core";
 import Tus from "@uppy/tus";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.graphite.atxcopy.com";
-const supabase = createClient();
 
 interface UploadFile {
   id: string;
@@ -29,8 +28,10 @@ export function UploadZone({ onUploadComplete }: UploadZoneProps) {
   const [uploads, setUploads] = useState<UploadFile[]>([]);
   const uppyRef = useRef<Uppy | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const supabaseRef = useRef(createClient());
 
   useEffect(() => {
+    const supabase = supabaseRef.current;
     const uppy = new Uppy({
       restrictions: {
         maxFileSize: 10 * 1024 * 1024 * 1024, // 10GB
@@ -40,9 +41,8 @@ export function UploadZone({ onUploadComplete }: UploadZoneProps) {
 
     uppy.use(Tus, {
       endpoint: `${API_URL}/upload`,
-      chunkSize: 10 * 1024 * 1024, // 10MB chunks - larger = fewer requests
-      retryDelays: [0, 1000], // Only 1 retry to prevent spam
-      parallelUploads: 10, // 10 parallel chunk uploads for max speed
+      chunkSize: 50 * 1024 * 1024, // 50MB chunks for faster uploads with fewer requests
+      retryDelays: [0, 1000, 3000], // Retry delays
       removeFingerprintOnSuccess: true, // Clean up after upload
       async onBeforeRequest(req) {
         // Validate session first with getUser(), then get fresh token
@@ -227,7 +227,7 @@ export function UploadZone({ onUploadComplete }: UploadZoneProps) {
             </p>
             <p className="mt-1 text-sm text-muted">or click to browse</p>
             <p className="mt-2 text-xs text-muted-foreground">
-              Up to 10GB per file • Blazing fast parallel uploads
+              Up to 10GB per file • Resumable uploads • Full speed
             </p>
           </div>
         </div>
