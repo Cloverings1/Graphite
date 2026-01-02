@@ -51,29 +51,22 @@ export function Pricing() {
               {/* Price */}
               <div className="mt-6">
                 <span className="text-5xl font-serif tracking-tight">${tier.price}</span>
-                <span className="text-foreground-muted ml-1">/mo</span>
+                <span className="text-foreground-muted ml-1">/ month</span>
               </div>
-              <p className="mt-2 text-sm text-muted">
-                ${tier.annualPrice}/mo billed annually
-              </p>
 
               {/* Storage details */}
               <div className="mt-8 pt-8 border-t border-border/50 space-y-3">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-foreground-muted">Storage</span>
-                  <span className="font-medium">{tier.storage}</span>
+                <div className="text-sm">
+                  <div className="text-foreground-muted mb-1">Storage</div>
+                  <div className="font-medium">{tier.storage} active NVMe workspace</div>
                 </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-foreground-muted">Speed</span>
-                  <span className="font-medium text-accent">{tier.speed}</span>
+                <div className="text-sm">
+                  <div className="text-foreground-muted mb-1">Upload Performance</div>
+                  <div className="font-medium text-accent">{tier.speed}</div>
                 </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-foreground-muted">Transfer</span>
-                  <span className="font-medium">{tier.transfer}</span>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-foreground-muted">Users</span>
-                  <span className="font-medium">{tier.users}</span>
+                <div className="text-sm">
+                  <div className="text-foreground-muted mb-1">Retention</div>
+                  <div className="font-medium">{tier.transfer}</div>
                 </div>
               </div>
 
@@ -128,8 +121,7 @@ export function Pricing() {
 
         {/* Footer note */}
         <p className="mt-16 text-center text-sm text-muted">
-          All plans include unlimited transfer, full speed, drag & drop uploads,
-          file sharing, and 14-day free trial.
+          Active working storage. Not long-term backup. Built for speed, not hoarding.
         </p>
       </div>
     </section>
