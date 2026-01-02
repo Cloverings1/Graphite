@@ -7,13 +7,13 @@ import Link from "next/link";
 
 export function Pricing() {
   return (
-    <section className="py-32 relative">
+    <section className="py-32 relative overflow-visible">
       {/* Background accent */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute right-0 top-1/3 h-[500px] w-[500px] rounded-full bg-accent/3 blur-3xl" />
       </div>
 
-      <div className="mx-auto max-w-6xl px-6 relative z-10">
+      <div className="mx-auto max-w-6xl px-6 relative z-10 overflow-visible">
         {/* Header */}
         <div className="mb-20 text-center">
           <h2 className="text-4xl md:text-5xl font-serif tracking-tight">
@@ -25,11 +25,11 @@ export function Pricing() {
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid gap-6 md:grid-cols-3 pt-8">
+        <div className="grid gap-6 md:grid-cols-3 pt-8 overflow-visible">
           {pricingTiers.map((tier, index) => (
             <div
               key={tier.id}
-              className={`relative rounded-2xl p-8 transition-all duration-500 hover-shine ${
+              className={`relative rounded-2xl p-8 transition-all duration-500 hover-shine overflow-visible ${
                 tier.popular
                   ? "glass border border-accent/30 shadow-lg shadow-accent/5"
                   : "glass glass-border"
