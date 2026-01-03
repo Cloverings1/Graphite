@@ -8,19 +8,25 @@ import Foundation
 // MARK: - Outgoing Messages
 
 enum BlipOutgoingMessage: Encodable {
+    // Connection & Friends
     case ping
     case getConnectCode
     case addFriend(code: String)
     case getFriends
-    case transferRequest(recipientId: String, fileName: String, fileSize: Int64, fileType: String)
-    case transferAccept(transferId: String)
-    case transferReject(transferId: String)
-    case transferChunk(transferId: String, chunk: String, offset: Int64)
-    case transferComplete(transferId: String)
-    case transferCancel(transferId: String)
+
+    // WebRTC Signaling
+    case rtcSessionRequest(peerId: String, sessionId: String, fileName: String?, fileSize: Int64?, fileType: String?)
+    case rtcSessionAccept(peerId: String, sessionId: String)
+    case rtcSessionReject(peerId: String, sessionId: String, reason: String?)
+    case rtcOffer(peerId: String, sessionId: String, sdp: String)
+    case rtcAnswer(peerId: String, sessionId: String, sdp: String)
+    case rtcIceCandidate(peerId: String, sessionId: String, candidate: String, sdpMid: String?, sdpMLineIndex: Int32?)
+    case rtcSessionReady(sessionId: String)
+    case rtcSessionClose(sessionId: String)
 
     enum CodingKeys: String, CodingKey {
-        case type, code, recipientId, fileName, fileSize, fileType, transferId, chunk, offset
+        case type, code, peerId, sessionId, sdp, candidate, sdpMid, sdpMLineIndex, reason
+        case fileName, fileSize, fileType
     }
 
     func encode(to encoder: Encoder) throws {
@@ -29,36 +35,64 @@ enum BlipOutgoingMessage: Encodable {
         switch self {
         case .ping:
             try container.encode("ping", forKey: .type)
+
         case .getConnectCode:
             try container.encode("get_connect_code", forKey: .type)
+
         case .addFriend(let code):
             try container.encode("add_friend", forKey: .type)
             try container.encode(code, forKey: .code)
+
         case .getFriends:
             try container.encode("get_friends", forKey: .type)
-        case .transferRequest(let recipientId, let fileName, let fileSize, let fileType):
-            try container.encode("transfer_request", forKey: .type)
-            try container.encode(recipientId, forKey: .recipientId)
-            try container.encode(fileName, forKey: .fileName)
-            try container.encode(fileSize, forKey: .fileSize)
-            try container.encode(fileType, forKey: .fileType)
-        case .transferAccept(let transferId):
-            try container.encode("transfer_accept", forKey: .type)
-            try container.encode(transferId, forKey: .transferId)
-        case .transferReject(let transferId):
-            try container.encode("transfer_reject", forKey: .type)
-            try container.encode(transferId, forKey: .transferId)
-        case .transferChunk(let transferId, let chunk, let offset):
-            try container.encode("transfer_chunk", forKey: .type)
-            try container.encode(transferId, forKey: .transferId)
-            try container.encode(chunk, forKey: .chunk)
-            try container.encode(offset, forKey: .offset)
-        case .transferComplete(let transferId):
-            try container.encode("transfer_complete", forKey: .type)
-            try container.encode(transferId, forKey: .transferId)
-        case .transferCancel(let transferId):
-            try container.encode("transfer_cancel", forKey: .type)
-            try container.encode(transferId, forKey: .transferId)
+
+        // WebRTC Signaling
+        case .rtcSessionRequest(let peerId, let sessionId, let fileName, let fileSize, let fileType):
+            try container.encode("rtc_session_request", forKey: .type)
+            try container.encode(peerId, forKey: .peerId)
+            try container.encode(sessionId, forKey: .sessionId)
+            try container.encodeIfPresent(fileName, forKey: .fileName)
+            try container.encodeIfPresent(fileSize, forKey: .fileSize)
+            try container.encodeIfPresent(fileType, forKey: .fileType)
+
+        case .rtcSessionAccept(let peerId, let sessionId):
+            try container.encode("rtc_session_accept", forKey: .type)
+            try container.encode(peerId, forKey: .peerId)
+            try container.encode(sessionId, forKey: .sessionId)
+
+        case .rtcSessionReject(let peerId, let sessionId, let reason):
+            try container.encode("rtc_session_reject", forKey: .type)
+            try container.encode(peerId, forKey: .peerId)
+            try container.encode(sessionId, forKey: .sessionId)
+            try container.encodeIfPresent(reason, forKey: .reason)
+
+        case .rtcOffer(let peerId, let sessionId, let sdp):
+            try container.encode("rtc_offer", forKey: .type)
+            try container.encode(peerId, forKey: .peerId)
+            try container.encode(sessionId, forKey: .sessionId)
+            try container.encode(sdp, forKey: .sdp)
+
+        case .rtcAnswer(let peerId, let sessionId, let sdp):
+            try container.encode("rtc_answer", forKey: .type)
+            try container.encode(peerId, forKey: .peerId)
+            try container.encode(sessionId, forKey: .sessionId)
+            try container.encode(sdp, forKey: .sdp)
+
+        case .rtcIceCandidate(let peerId, let sessionId, let candidate, let sdpMid, let sdpMLineIndex):
+            try container.encode("rtc_ice_candidate", forKey: .type)
+            try container.encode(peerId, forKey: .peerId)
+            try container.encode(sessionId, forKey: .sessionId)
+            try container.encode(candidate, forKey: .candidate)
+            try container.encodeIfPresent(sdpMid, forKey: .sdpMid)
+            try container.encodeIfPresent(sdpMLineIndex, forKey: .sdpMLineIndex)
+
+        case .rtcSessionReady(let sessionId):
+            try container.encode("rtc_session_ready", forKey: .type)
+            try container.encode(sessionId, forKey: .sessionId)
+
+        case .rtcSessionClose(let sessionId):
+            try container.encode("rtc_session_close", forKey: .type)
+            try container.encode(sessionId, forKey: .sessionId)
         }
     }
 }
@@ -67,21 +101,34 @@ enum BlipOutgoingMessage: Encodable {
 
 struct BlipIncomingMessage: Decodable {
     let type: String
+
+    // Connection
     let userId: String?
     let email: String?
+
+    // Connect code
     let code: String?
+
+    // Error
     let message: String?
+
+    // Friends
     let friends: [Friend]?
     let friend: Friend?
     let friendId: String?
-    let transferId: String?
+
+    // WebRTC Signaling
     let senderId: String?
     let senderName: String?
+    let sessionId: String?
+    let sdp: String?
+    let candidate: String?
+    let sdpMid: String?
+    let sdpMLineIndex: Int32?
+    let reason: String?
+
+    // File Transfer Metadata (for session requests)
     let fileName: String?
     let fileSize: Int64?
     let fileType: String?
-    let chunk: String?
-    let offset: Int64?
-    let progress: Double?
-    let reason: String?
 }

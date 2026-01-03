@@ -26,10 +26,10 @@ struct LoginView: View {
                         )
                     )
 
-                Text("Blip")
-                    .font(.system(size: 32, weight: .bold, design: .rounded))
+                Text("Graphite Flux")
+                    .font(.system(size: 28, weight: .bold, design: .rounded))
 
-                Text("Instant file transfer")
+                Text("High-speed file transfer")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
             }

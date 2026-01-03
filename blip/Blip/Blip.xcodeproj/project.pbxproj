@@ -78,6 +78,7 @@
 				DD9FA46A2F086AE0005A8C48 /* Blip */,
 				DD9FA4792F086AE1005A8C48 /* BlipTests */,
 				DD9FA4832F086AE1005A8C48 /* BlipUITests */,
+				DD9FA4B62F08C8BD005A8C48 /* Frameworks */,
 				DD9FA4692F086AE0005A8C48 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +91,13 @@
 				DD9FA4802F086AE1005A8C48 /* BlipUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		DD9FA4B62F08C8BD005A8C48 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,6 +203,8 @@
 			);
 			mainGroup = DD9FA45F2F086AE0005A8C48;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = DD9FA4692F086AE0005A8C48 /* Products */;
 			projectDirPath = "";
@@ -402,13 +412,15 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Graphite Flux";
+				INFOPLIST_KEY_CFBundleName = "Graphite Flux";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Graphite.Blip;
+				PRODUCT_BUNDLE_IDENTIFIER = Graphite.Flux;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -429,13 +441,15 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Graphite Flux";
+				INFOPLIST_KEY_CFBundleName = "Graphite Flux";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Graphite.Blip;
+				PRODUCT_BUNDLE_IDENTIFIER = Graphite.Flux;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -453,7 +467,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Graphite.BlipTests;
+				PRODUCT_BUNDLE_IDENTIFIER = Graphite.FluxTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -471,7 +485,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Graphite.BlipTests;
+				PRODUCT_BUNDLE_IDENTIFIER = Graphite.FluxTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -487,7 +501,7 @@
 				DEVELOPMENT_TEAM = VJX635MVWF;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Graphite.BlipUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = Graphite.FluxUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -503,7 +517,7 @@
 				DEVELOPMENT_TEAM = VJX635MVWF;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Graphite.BlipUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = Graphite.FluxUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
