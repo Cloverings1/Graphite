@@ -21,7 +21,7 @@ export interface PricingTier {
   users: string;
   support: string;
   features: string[];
-  blipFeatures?: string[];
+  fluxFeatures?: string[];
   popular?: boolean;
   disabled?: boolean;
   disabledReason?: string;

@@ -17,11 +17,6 @@ export const pricingTiers: PricingTier[] = [
       "Shareable download links",
       "30-day inactivity retention",
     ],
-    blipFeatures: [
-      "Blip included (limited)",
-      "Up to 3 connections",
-      "1 active transfer at a time",
-    ],
     popular: true,
     cta: "Request Access",
   },
@@ -41,8 +36,8 @@ export const pricingTiers: PricingTier[] = [
       "60-day inactivity retention",
       "Priority support",
     ],
-    blipFeatures: [
-      "Full Blip access",
+    fluxFeatures: [
+      "Graphite Flux included",
       "Unlimited connections",
       "2 concurrent transfers",
       "Priority relay bandwidth",
@@ -67,8 +62,8 @@ export const pricingTiers: PricingTier[] = [
       "Pinned projects (never auto-archived)",
       "White-glove onboarding",
     ],
-    blipFeatures: [
-      "Blip Pro",
+    fluxFeatures: [
+      "Graphite Flux Pro",
       "Unlimited connections",
       "3-4 concurrent transfers",
       "Maximum relay priority",

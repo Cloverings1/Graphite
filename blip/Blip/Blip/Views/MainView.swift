@@ -23,7 +23,7 @@ struct MainView: View {
                 // Header
                 HStack {
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Blip")
+                        Text("Graphite Flux")
                             .font(.headline)
                         HStack(spacing: 4) {
                             Circle()
@@ -148,18 +148,19 @@ struct MainView: View {
             }
         }
         .alert("Incoming Transfer", isPresented: .init(
-            get: { blipService.pendingIncomingTransfer != nil },
-            set: { if !$0 { blipService.rejectTransfer() } }
+            get: { blipService.pendingIncomingSession != nil },
+            set: { if !$0 { blipService.rejectIncomingSession() } }
         )) {
             Button("Accept") {
-                blipService.acceptTransfer()
+                blipService.acceptIncomingSession()
             }
             Button("Decline", role: .cancel) {
-                blipService.rejectTransfer()
+                blipService.rejectIncomingSession()
             }
         } message: {
-            if let transfer = blipService.pendingIncomingTransfer {
-                Text("\(transfer.peerName) wants to send you \"\(transfer.fileName)\" (\(transfer.formattedSize))")
+            if let session = blipService.pendingIncomingSession {
+                let sizeStr = ByteCountFormatter.string(fromByteCount: session.fileSize ?? 0, countStyle: .file)
+                Text("\(session.peerName) wants to send you \"\(session.fileName ?? "file")\" (\(sizeStr))")
             }
         }
         .onAppear {
@@ -475,7 +476,7 @@ struct TransferRow: View {
                         .foregroundColor(.blue)
 
                 case .inProgress(let progress):
-                    ProgressView(value: progress / 100)
+                    ProgressView(value: progress)
                         .progressViewStyle(.linear)
 
                 case .completed:

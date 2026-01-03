@@ -94,8 +94,8 @@ export function Pricing() {
                 ))}
               </ul>
 
-              {/* Blip Features */}
-              {tier.blipFeatures && tier.blipFeatures.length > 0 && (
+              {/* Flux Features */}
+              {tier.fluxFeatures && tier.fluxFeatures.length > 0 && (
                 <div className="mt-6 pt-6 border-t border-border/30">
                   <div className="flex items-center gap-2 mb-4">
                     <div className="h-5 w-5 rounded bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">
@@ -103,11 +103,11 @@ export function Pricing() {
                         <path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" />
                       </svg>
                     </div>
-                    <span className="text-sm font-medium text-foreground">Blip</span>
-                    <span className="text-xs text-muted">Instant file transfer</span>
+                    <span className="text-sm font-medium text-foreground">Graphite Flux</span>
+                    <span className="text-xs text-muted">High-performance transfer engine</span>
                   </div>
                   <ul className="space-y-2">
-                    {tier.blipFeatures.map((feature) => (
+                    {tier.fluxFeatures.map((feature) => (
                       <li key={feature} className="flex items-start gap-3 text-sm">
                         <div className={`mt-0.5 flex-shrink-0 h-4 w-4 rounded flex items-center justify-center ${
                           tier.disabled ? "bg-border/30" : "bg-violet-500/10"
